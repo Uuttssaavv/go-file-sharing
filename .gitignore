@@ -1,4 +1,4 @@
 .air.toml
 tmp/
-*.mod
 *.sum
+.env
