@@ -18,7 +18,18 @@ func Connection() *gorm.DB {
 		defer logrus.Info("Connection to Database Failed")
 		logrus.Fatal(err.Error())
 	} else {
-		logrus.Println("Connection to Database Successfully")
+	logrus.Info("Connection to Database Successfully")
 	}
+
+	//  setup db migrations here
+	databaseMigrations(db)
+
 	return db
+}
+
+func databaseMigrations(db *gorm.DB){
+	// 
+	
+	logrus.Info("Database migrations")
+
 }
