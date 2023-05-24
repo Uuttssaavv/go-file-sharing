@@ -12,7 +12,7 @@ func Connection() *gorm.DB {
 
 	databaseURI <- utils.GodotEnv("DATABASE_URL_DEV")
 
-	db, err := gorm.Open("postgres", databaseURI)
+	db, err := gorm.Open("postgres", <-databaseURI)
 
 	if err != nil {
 		defer logrus.Info("Connection to Database Failed")
