@@ -1,10 +1,12 @@
 package configs
 
 import (
+	"go-crud/models"
+	"go-crud/utils"
+
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"github.com/sirupsen/logrus"
-	"go-crud/utils"
 )
 
 func Connection() *gorm.DB {
@@ -29,7 +31,7 @@ func Connection() *gorm.DB {
 
 func databaseMigrations(db *gorm.DB){
 	// 
-	
+	db.AutoMigrate(&models.UserEntity{})
 	logrus.Info("Database migrations")
 
 }
