@@ -1,13 +1,17 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
 	"go-crud/configs"
 	"go-crud/routes"
+	"go-crud/utils"
+	"log"
+
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
-	SetupAppRouter()
+	router := SetupAppRouter()
+	log.Fatal(router.Run(":" + utils.GodotEnv("GO_PORT")))
 }
 
 func SetupAppRouter() *gin.Engine {
@@ -16,7 +20,7 @@ func SetupAppRouter() *gin.Engine {
 
 	router := gin.Default()
 
-	gin.SetMode(gin.TestMode)
+	gin.SetMode(gin.DebugMode)
 
 	api := router.Group("api/v1")
 
