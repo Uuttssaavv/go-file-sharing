@@ -15,4 +15,8 @@ func InitFileRoutes(db *gorm.DB, route *gin.RouterGroup) {
 	fileHanlders := filehandlers.NewCreateHandler(fileService)
 
 	route.POST("/create", fileHanlders.CreateHandler)
+
+	route.GET("/", fileHanlders.GetAllFilesHandler)
+
+	route.DELETE("/:fileId", fileHanlders.DeleteHandler)
 }
