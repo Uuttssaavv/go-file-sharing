@@ -24,7 +24,11 @@ func SetupAppRouter() *gin.Engine {
 
 	api := router.Group("api/v1")
 
+	file := api.Group("/file")
+
 	routes.InitAuthRoutes(db, api)
+
+	routes.InitFileRoutes(db, file)
 
 	return router
 }
