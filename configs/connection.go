@@ -20,7 +20,7 @@ func Connection() *gorm.DB {
 		defer logrus.Info("Connection to Database Failed")
 		logrus.Fatal(err.Error())
 	} else {
-	logrus.Info("Connection to Database Successfully")
+		logrus.Info("Connection to Database Successfully")
 	}
 
 	//  setup db migrations here
@@ -29,9 +29,11 @@ func Connection() *gorm.DB {
 	return db
 }
 
-func databaseMigrations(db *gorm.DB){
-	// 
+func databaseMigrations(db *gorm.DB) {
+	//
 	db.AutoMigrate(&models.UserEntity{})
+	db.AutoMigrate(&models.FileModel{})
+
 	logrus.Info("Database migrations")
 
 }
