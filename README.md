@@ -79,6 +79,32 @@ In the second function, the return type is `models.UserEntity`.
 It means new object will be created each time you call the function, and any modifications made to the returned `UserEntity` object will not affect the original object passed as an argument.
 **Note:** This can be useful if you want to create multiple independent instances of `UserEntity`
 
+
+### Relationship
+```go
+type FileEntity struct {
+	ID        uint       `gorm:"primary_key" json:"id"`
+	Type      string     `gorm:"not null" json:"type"`
+	Name      string     `gorm:"not null" json:"name"`
+	Url       string     `gorm:"not null" json:"url"`
+	AccessKey string     `gorm:"" json:"access_key"`
+	CreatedAt time.Time  `gorm:"" json:"createdAt"`
+	UpdatedAt time.Time  `gorm:"" json:"updatedAt"`
+	UserID    uint       `gorm:"foreignkey:UserRefer" json:"-"`
+	User      UserEntity `gorm:"foreignkey:UserRefer" json:"user"`
+}
+
+type UserEntity struct {
+	ID        uint   `gorm:"primary_key"`
+	Username  string `gorm:"column:username;unique;not null"`
+	Email     string `gorm:"column:email;unique;not null"`
+	Image     string `gorm:"column:image"`
+	Password  string `gorm:"column:password;not null" json:"-"`
+	CreatedAt time.Time
+	UpdatedAt time.Time
+}
+```
+In the `FileEntity` struct, there is a foreign key field `UserID` of type uint. This field establishes the relationship between `FileEntity` and `UserEntity` using the **foreign key** constraint. The foreign key constraint ensures data integrity between the two tables when inserting or updating records.
 ### Utilities
 
 In the file `utils/json.go` the function definition looks like
