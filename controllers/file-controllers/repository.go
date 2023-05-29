@@ -1,7 +1,6 @@
 package filecontrollers
 
 import (
-	"fmt"
 	"go-crud/models"
 	"net/http"
 

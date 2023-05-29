@@ -7,11 +7,11 @@ import (
 )
 
 type UserEntity struct {
-	ID        uint    `gorm:"primary_key"`
-	Username  string  `gorm:"column:username;unique;not null"`
-	Email     string  `gorm:"column:email;unique;not null"`
+	ID        uint   `gorm:"primary_key"`
+	Username  string `gorm:"column:username;unique;not null"`
+	Email     string `gorm:"column:email;unique;not null"`
 	Image     string `gorm:"column:image"`
-	Password  string  `gorm:"column:password;not null"`
+	Password  string `gorm:"column:password;not null" json:"-"`
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }
@@ -21,7 +21,6 @@ func (entity *UserEntity) BeforeCreate(db *gorm.DB) error {
 	entity.CreatedAt = time.Now().Local()
 	return nil
 }
-
 
 func (entity *UserEntity) BeforeUpdate(db *gorm.DB) error {
 	entity.UpdatedAt = time.Now().Local()
