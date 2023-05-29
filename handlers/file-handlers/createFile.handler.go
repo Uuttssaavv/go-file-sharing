@@ -3,6 +3,7 @@ package filehandlers
 import (
 	"fmt"
 	filecontrollers "go-crud/controllers/file-controllers"
+	"go-crud/models"
 	"go-crud/utils"
 	"net/http"
 
@@ -12,16 +13,30 @@ import (
 func (h *handler) CreateHandler(context *gin.Context) {
 	file, header, _ := context.Request.FormFile("file")
 
+	var user models.UserEntity
+
+	jwtData, _ := context.Get("user")
+
+	// convert header to user enitity
+	errors := utils.StringToEntity(jwtData, &user)
+
+	if errors != nil {
+		utils.APIResponse(context, "User does not exist", http.StatusNotFound, http.MethodPost, nil)
+		return
+	}
+	fmt.Println(context.Keys["user"])
+	fmt.Printf("%+v", user)
 	result, err := utils.UploadFile(file, header.Header.Get("Content-Type"))
 
 	if err != nil {
-		fmt.Println(err)
+		utils.APIResponse(context, "Unable to upload file to the server", http.StatusFailedDependency, http.MethodPost, nil)
 	}
-	
+
 	fileInput := filecontrollers.FileInput{
-		ID:   result.PublicID,
-		Type: result.Format,
-		Name: header.Filename,
+		ID:     result.PublicID,
+		Type:   result.Format,
+		Name:   header.Filename,
+		UserId: user.ID,
 	}
 
 	fileResponse, statusCode := h.service.CreateFile(&fileInput)
