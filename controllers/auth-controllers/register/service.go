@@ -21,6 +21,7 @@ func (service *service) RegisterService(input *RegisterInput) (*models.UserEntit
 		Email:    input.Email,
 		Password: input.Password,
 		Username: input.Username,
+		Image: &input.Image,
 	}
 	return service.repository.RegisterRepository(&user)
 }
