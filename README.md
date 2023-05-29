@@ -72,9 +72,28 @@ func (r *repository) LoginRepository(input models.UserEntity) (models.UserEntity
 
 ```
 
-In the first function, the return type is `*models.UserEntity`. It means it returns the pointer to the `UserEnitity` type. 
+In the first function, the return type is `*models.UserEntity`. It means it returns the pointer to the `UserEnitity` type.
 This allows us to modify the object directly, and any changes made to the returned object will affect the original object. This can be useful because we want to maintain a single shared instance of `UserEnitity` and to avoid unnecessary object copies.
 
 In the second function, the return type is `models.UserEntity`.
 It means new object will be created each time you call the function, and any modifications made to the returned `UserEntity` object will not affect the original object passed as an argument.
 **Note:** This can be useful if you want to create multiple independent instances of `UserEntity`
+
+### Utilities
+
+In the file `utils/json.go` the function definition looks like
+
+```go
+func ObjectToJson[T any](object interface{}, data *T) {
+	// 
+}
+```
+
+Which means the function `ObjectToJson` takes the parameter of type `T` and returns the pointer to address of same type.
+
+**Usecase:**
+```go
+var data register.RegisterResponse
+utils.ObjectToJson(resultLogin, &data)
+```
+So, when we want to convert the object of type `RegisterResponse` to json. We call the function `ObjectToJson` and it maps `resultLogin` to the object of type `register.RegisterResponse` and assign the value to `data`.
