@@ -1,7 +1,6 @@
 package register
 
 import (
-	"encoding/json"
 	"go-crud/controllers/auth-controllers/register"
 	"go-crud/utils"
 	"net/http"
@@ -68,7 +67,7 @@ func (h *handler) RegisterHandler(ctx *gin.Context) {
 	switch errorCode {
 	case http.StatusCreated:
 		accessTokenData := map[string]interface{}{"id": registerResult.ID, "email": registerResult.Email}
-		token, errToken := utils.Sign(accessTokenData, utils.GodotEnv("JWT_SECRET"), 60)
+		accessToken, errToken := utils.Sign(accessTokenData, utils.GodotEnv("JWT_SECRET"), 60)
 
 		if errToken != nil {
 			defer logrus.Error(errToken.Error())
@@ -77,11 +76,10 @@ func (h *handler) RegisterHandler(ctx *gin.Context) {
 		}
 		//  parse the UserEntity into response json
 		var data register.RegisterResponse
-		jason, _ := json.Marshal(registerResult)
 
-		json.Unmarshal([]byte(jason), &data)
+		utils.ObjectToJson(registerResult, &data)
 
-		data.Token = token
+		data.Token = accessToken
 
 		utils.APIResponse(ctx, "Register new account successfully", http.StatusCreated, http.MethodPost, data)
 		return
