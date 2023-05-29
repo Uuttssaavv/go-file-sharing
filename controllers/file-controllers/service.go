@@ -5,7 +5,7 @@ import "go-crud/models"
 type Service interface {
 	CreateFile(input *FileInput) (*models.FileModel, int)
 
-	GetAllFiles() ([]models.FileModel, int)
+	GetAllFiles(userId uint ) ([]models.FileModel, int)
 
 	DeleteFile(fileID uint) int
 }
@@ -29,9 +29,9 @@ func (s *service) CreateFile(input *FileInput) (*models.FileModel, int) {
 	return s.repository.CreateFile(&fileModel)
 }
 
-func (s *service) GetAllFiles() ([]models.FileModel, int) {
+func (s *service) GetAllFiles(userId uint) ([]models.FileModel, int) {
 
-	return s.repository.GetAllFiles()
+	return s.repository.GetAllFiles(userId)
 }
 
 func (s *service) DeleteFile(fileID uint) int {
