@@ -6,6 +6,7 @@ import (
 
 	"go-crud/controllers/file-controllers"
 	"go-crud/handlers/file-handlers"
+	"go-crud/middlewares"
 )
 
 func InitFileRoutes(db *gorm.DB, route *gin.RouterGroup) {
@@ -13,6 +14,9 @@ func InitFileRoutes(db *gorm.DB, route *gin.RouterGroup) {
 	fileRepository := filecontrollers.NewFileRepository(db)
 	fileService := filecontrollers.NewFileService(fileRepository)
 	fileHanlders := filehandlers.NewCreateHandler(fileService)
+
+	// added auth middlewares
+	route.Use(middlewares.Auth())
 
 	route.POST("/create", fileHanlders.CreateHandler)
 
