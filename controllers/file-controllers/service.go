@@ -24,6 +24,7 @@ func (s *service) CreateFile(input *FileInput) (*models.FileModel, int) {
 		Name:      input.Name,
 		Url:       input.Url,
 		AccessKey: input.ID,
+		UserID:      input.UserId,
 	}
 	return s.repository.CreateFile(&fileModel)
 }
