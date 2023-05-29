@@ -33,15 +33,11 @@ func (repo *repository) CreateFile(input *models.FileModel) (*models.FileModel, 
 	checkIfFileExists := db.Select("*").Where("ID=?", input.ID).Find(&file)
 
 	db.Select("*").Where("ID=?", input.UserID).Find(&input.User)
-	
-	fmt.Printf("User: %+v\n", input)
-	fmt.Printf("User: %+v\n", input.User)
-	
+
 	if checkIfFileExists.RowsAffected > 0 {
 		return nil, http.StatusConflict
 	}
 	db.NewRecord(input)
-
 	createFile := db.Create(&input)
 
 	if createFile.Error != nil {
