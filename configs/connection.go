@@ -32,7 +32,7 @@ func Connection() *gorm.DB {
 func databaseMigrations(db *gorm.DB) {
 	//
 	db.AutoMigrate(&models.UserEntity{}, &models.FileModel{})
-	db.Model(&models.FileModel{}).AddForeignKey("user_id", "user_entities(ID)", "RESTRICT", "RESTRICT")
+	db.Model(&models.FileModel{}).AddForeignKey("user_id", "user_entities(id)", "RESTRICT", "RESTRICT")
 
 	logrus.Info("Database migrations")
 
