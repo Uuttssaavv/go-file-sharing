@@ -29,9 +29,9 @@ func (repo *repository) CreateFile(input *models.FileModel) (*models.FileModel, 
 
 	var file models.UserEntity
 
-	checkUserAccount := db.Select("*").Where("ID=?", input.ID).Find(&file)
+	checkIfFileExists := db.Select("*").Where("ID=?", input.ID).Find(&file)
 
-	if checkUserAccount.RowsAffected > 0 {
+	if checkIfFileExists.RowsAffected > 0 {
 		return nil, http.StatusConflict
 	}
 	db.NewRecord(input)
