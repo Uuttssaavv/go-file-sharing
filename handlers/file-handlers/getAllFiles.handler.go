@@ -1,4 +1,4 @@
-package filehandlers
+package fileHandlers
 
 import (
 	"fmt"

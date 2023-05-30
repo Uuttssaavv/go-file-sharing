@@ -1,4 +1,4 @@
-package filehandlers
+package fileHandlers
 
 import (
 	"github.com/gin-gonic/gin"

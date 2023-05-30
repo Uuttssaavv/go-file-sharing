@@ -1,4 +1,4 @@
-package filehandlers
+package fileHandlers
 
 import (
 	"go-crud/controllers/file-controllers"

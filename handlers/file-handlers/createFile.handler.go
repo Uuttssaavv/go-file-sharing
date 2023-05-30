@@ -1,7 +1,6 @@
-package filehandlers
+package fileHandlers
 
 import (
-	"fmt"
 	filecontrollers "go-crud/controllers/file-controllers"
 	"go-crud/models"
 	"go-crud/utils"
@@ -24,8 +23,6 @@ func (h *handler) CreateHandler(context *gin.Context) {
 		utils.APIResponse(context, "User does not exist", http.StatusNotFound, http.MethodPost, nil)
 		return
 	}
-	fmt.Println(context.Keys["user"])
-	fmt.Printf("%+v", user)
 	result, err := utils.UploadFile(file, header.Header.Get("Content-Type"))
 
 	if err != nil {

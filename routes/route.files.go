@@ -13,7 +13,7 @@ func InitFileRoutes(db *gorm.DB, route *gin.RouterGroup) {
 
 	fileRepository := filecontrollers.NewFileRepository(db)
 	fileService := filecontrollers.NewFileService(fileRepository)
-	fileHanlders := filehandlers.NewCreateHandler(fileService)
+	fileHanlders := fileHandlers.NewCreateHandler(fileService)
 
 	// added auth middlewares
 	route.Use(middlewares.Auth())
