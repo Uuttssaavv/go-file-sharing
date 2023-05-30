@@ -1,14 +1,12 @@
 package configs_test
 
 import (
-	// "errors"
 	"errors"
 	"fmt"
 	"go-crud/configs"
 	"go-crud/tests/mocks"
 	"testing"
 
-	// "github.com/jinzhu/gorm"
 	"github.com/jinzhu/gorm"
 	"github.com/stretchr/testify/assert"
 )
