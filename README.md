@@ -1,5 +1,20 @@
 # File Sharing with Golang
 
+This project is designed to help beginners learn backend development using Golang. It covers a wide range of beginner concepts and techniques in the backend development space. Topics covered in this project include:
+
+- Setting up a database connection using `GORM`
+- Building REST APIs using the `GIN framework`
+- Implementing CRUD operations using `GORM` for data manipulation
+- Understanding and implementing table associations with foreign keys
+- Efficiently populating fields using the `Preload()` function
+- Serialization of data into JSON format
+- Customizing response and error formats for better user experience
+- Uploading files to Cloudinary for storage and retrieval
+- Utilizing .env files for secure configuration management
+- Following **Clean Architecture** principles for maintainability and scalability
+
+---
+
 Generate the go.mod file with the command `go mod init go-crud` go-crud here is the package name.
 After this run the command `go mod tidy` to add module requirements and generate sum files.
 `go mod tidy` also cleans the unused packages.
