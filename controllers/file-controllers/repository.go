@@ -2,6 +2,7 @@ package filecontrollers
 
 import (
 	"go-crud/models"
+	"go-crud/utils"
 	"net/http"
 
 	"github.com/jinzhu/gorm"
@@ -61,5 +62,22 @@ func (repo *repository) GetAllFiles(userId uint) ([]models.FileModel, int) {
 
 func (repo *repository) DeleteFile(fileID uint) int {
 
-	return 0
+	var files models.FileModel
+	db := repo.db
+
+	checkIfFileExists := db.Select("*").Where("id=?", fileID).Find(&files)
+
+	if checkIfFileExists.RowsAffected > 0 {
+		// delete file from cloudinary
+		err := utils.DeleteFile(files.AccessKey)
+		if len(err) > 0 {
+			return http.StatusExpectationFailed
+		}
+		//  delete file from the DB
+		db.Delete(&files)
+		
+		return http.StatusOK
+	}
+
+	return http.StatusNotFound
 }

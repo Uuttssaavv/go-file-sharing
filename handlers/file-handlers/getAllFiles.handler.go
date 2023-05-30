@@ -1,7 +1,6 @@
 package fileHandlers
 
 import (
-	"fmt"
 	"go-crud/models"
 	"go-crud/utils"
 	"net/http"
@@ -17,11 +16,11 @@ func (h *handler) GetAllFilesHandler(context *gin.Context) {
 	errors := utils.StringToEntity(jwtData, &user)
 
 	if errors != nil {
-		utils.APIResponse(context, "User does not exist", http.StatusNotFound, http.MethodPost, nil)
+		utils.APIResponse(context, "User does not exist", http.StatusNotFound, http.MethodGet, nil)
 		return
 	}
 	userId := user.ID
-	fmt.Println(userId)
+
 	fileResponse, statusCode := h.service.GetAllFiles(userId)
 
 	switch statusCode {
@@ -33,15 +32,15 @@ func (h *handler) GetAllFilesHandler(context *gin.Context) {
 			fileUrl := utils.GetFileUrl(file.AccessKey)
 			file.Url = fileUrl
 		}
-		utils.APIResponse(context, "Received files", http.StatusOK, http.MethodPost, &fileResponse)
+		utils.APIResponse(context, "Received files", http.StatusOK, http.MethodGet, &fileResponse)
 		return
 
 	case http.StatusExpectationFailed:
-		utils.APIResponse(context, "Internal Server error occured", http.StatusExpectationFailed, http.MethodPost, nil)
+		utils.APIResponse(context, "Internal Server error occured", http.StatusExpectationFailed, http.MethodGet, nil)
 		return
 
 	case http.StatusConflict:
-		utils.APIResponse(context, "File already exists. Please try with another file", http.StatusConflict, http.MethodPost, nil)
+		utils.APIResponse(context, "File already exists. Please try with another file", http.StatusConflict, http.MethodGet, nil)
 		return
 	}
 }
