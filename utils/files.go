@@ -6,6 +6,7 @@ import (
 	"mime/multipart"
 
 	"github.com/cloudinary/cloudinary-go"
+	"github.com/cloudinary/cloudinary-go/api"
 	"github.com/cloudinary/cloudinary-go/api/admin"
 	"github.com/cloudinary/cloudinary-go/api/uploader"
 )
@@ -35,4 +36,19 @@ func GetFileUrl(fileId string) string {
 		return err.Error()
 	}
 	return result.URL
+}
+
+func DeleteFile(fileId string) string {
+	cld, _ := cloudinary.NewFromURL(GodotEnv("CLOUDINARY_URL"))
+
+	_, err := cld.Admin.DeleteAssets(context.Background(), admin.DeleteAssetsParams{
+		PublicIDs: api.CldAPIArray{
+			fileId,
+		},
+	})
+	if err != nil {
+		fmt.Println(err.Error())
+		return err.Error()
+	}
+	return ""
 }
