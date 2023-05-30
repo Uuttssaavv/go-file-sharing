@@ -14,8 +14,8 @@ type FileModel struct {
 	AccessKey string     `gorm:"" json:"access_key"`
 	CreatedAt time.Time  `gorm:"" json:"createdAt"`
 	UpdatedAt time.Time  `gorm:"" json:"updatedAt"`
-	UserID    uint       `gorm:"foreignkey:UserRefer" json:"-"`
-	User      UserEntity `gorm:"foreignkey:UserRefer" json:"user"`
+	UserID    uint       `gorm:"foreignkey:UserID" json:"-"`
+	User      UserEntity `gorm:"foreignkey:UserID" json:"user"`
 }
 
 

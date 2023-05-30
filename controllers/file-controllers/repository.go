@@ -1,7 +1,6 @@
 package filecontrollers
 
 import (
-	"fmt"
 	"go-crud/models"
 	"net/http"
 
@@ -52,11 +51,11 @@ func (repo *repository) GetAllFiles(userId uint) ([]models.FileModel, int) {
 	db := repo.db
 
 	checkIfFileExists := db.Select("*").Where("user_id=?", userId).Find(&files)
-	
+	// db.Preload will populate the user field in `FileModel`
+	db.Preload("User").Find(&files)
 	if checkIfFileExists.Error != nil {
 		return nil, http.StatusNotFound
 	}
-	fmt.Printf("%+v",files)
 	return files, http.StatusOK
 }
 
