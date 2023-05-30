@@ -46,3 +46,10 @@ func databaseMigrations(db *gorm.DB) {
 	logrus.Info("Database migrations")
 
 }
+
+
+// Proxy function that can be replaced for testing
+var Connection = func() *gorm.DB {
+	svc := &service{}
+	return svc.Connection()
+}
