@@ -24,12 +24,16 @@ func (h *handler) GetAllFilesHandler(context *gin.Context) {
 	fmt.Println(userId)
 	fileResponse, statusCode := h.service.GetAllFiles(userId)
 
-	fmt.Println(fileResponse)
-	fmt.Println(statusCode)
-
 	switch statusCode {
 	case http.StatusOK:
-		utils.APIResponse(context, "Received files", http.StatusOK, http.MethodPost, fileResponse)
+		
+		//  populate the url field
+		for index := range fileResponse {
+			file :=&fileResponse[index]
+			fileUrl := utils.GetFileUrl(file.AccessKey)
+			file.Url = fileUrl
+		}
+		utils.APIResponse(context, "Received files", http.StatusOK, http.MethodPost, &fileResponse)
 		return
 
 	case http.StatusExpectationFailed:

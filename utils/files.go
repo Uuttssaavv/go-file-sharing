@@ -15,7 +15,6 @@ func UploadFile(file multipart.File, fileType string) (*uploader.UploadResult, e
 
 	randString := GenerateRandomString(6)
 	fileName := fmt.Sprintf("uploads/%s", randString)
-	fmt.Println(fileType)
 	result, err := cld.Upload.Upload(context.Background(), file, uploader.UploadParams{
 		PublicID: fileName,
 	})
@@ -35,6 +34,5 @@ func GetFileUrl(fileId string) string {
 		fmt.Println(err.Error())
 		return err.Error()
 	}
-	fmt.Println(result)
 	return result.URL
 }
