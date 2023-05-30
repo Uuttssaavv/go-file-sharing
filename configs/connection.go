@@ -8,8 +8,17 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"github.com/sirupsen/logrus"
 )
+type DBConnection interface {
+	Connection() *gorm.DB
+}
 
-func Connection() *gorm.DB {
+type service struct{}
+
+func NewDBService() *service{
+	return &service{}
+}
+
+func (s *service) Connection() *gorm.DB {
 	databaseURI := make(chan string, 1)
 
 	databaseURI <- utils.GodotEnv("DATABASE_URL_DEV")

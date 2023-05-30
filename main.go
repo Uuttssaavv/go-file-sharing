@@ -16,7 +16,8 @@ func main() {
 
 func SetupAppRouter() *gin.Engine {
 
-	db := configs.Connection()
+	service := configs.NewDBService()
+	db := service.Connection()
 
 	router := gin.Default()
 
