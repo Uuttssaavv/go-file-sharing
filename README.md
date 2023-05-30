@@ -105,6 +105,15 @@ type UserEntity struct {
 }
 ```
 In the `FileEntity` struct, there is a foreign key field `UserID` of type uint. This field establishes the relationship between `FileEntity` and `UserEntity` using the **foreign key** constraint. The foreign key constraint ensures data integrity between the two tables when inserting or updating records.
+
+### Populating Associations
+To populate the foreign key value in GORM based on the given context, we can use the `Preload` function with the relationship defined in the `FileModel` struct. Here's an example:
+```go
+var files []models.FileModel
+db.Select("*").Where("user_id=?", userId).Find(&files)
+db.Preload("User").Find(&files)
+```
+In this case, the `Preload("User")` call specifies that we want to load the associated `UserEntity` record using the foreign key relationship defined in the `FileModel` struct. This will populate the User field in the `FileModel` instance with the associated `UserEntity`.
 ### Utilities
 
 In the file `utils/json.go` the function definition looks like
