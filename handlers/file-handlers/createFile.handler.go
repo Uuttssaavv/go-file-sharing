@@ -38,6 +38,11 @@ func (h *handler) CreateHandler(context *gin.Context) {
 
 	fileResponse, statusCode := h.service.CreateFile(&fileInput)
 
+	if statusCode!= http.StatusCreated{
+		//  delete the file in cloudinary if it is not created in the DB
+		utils.DeleteFile(result.PublicID)
+	}
+
 	switch statusCode {
 	case http.StatusCreated:
 		utils.APIResponse(context, "Uploaded the file successfully.", http.StatusCreated, http.MethodPost, fileResponse)
